@@ -2,6 +2,7 @@ import { UserModel } from './../users/user-schema';
 import { loginUserController } from './auth-controller';
 import { Request, Response } from 'express';
 import { encryptPassword, generateJWTToken } from './auth-utils';
+import { CustomHTTPError } from '../../utils/errors/custom-http-error';
 
 describe('Given a loginUserController', () => {
   const request = {
@@ -16,6 +17,8 @@ describe('Given a loginUserController', () => {
     json: jest.fn(),
     sendStatus: jest.fn(),
   } as Partial<Response>;
+
+  const next = jest.fn();
 
   const tokenJWT = {
     accessToken: generateJWTToken(request.body.email),
@@ -45,11 +48,9 @@ describe('Given a loginUserController', () => {
     UserModel.findOne = jest.fn().mockImplementation(() => ({
       exec: jest.fn().mockResolvedValue(null),
     }));
-    await loginUserController(
-      request as Request,
-      response as Response,
-      jest.fn(),
+    await loginUserController(request as Request, response as Response, next);
+    expect(next).toHaveBeenCalledWith(
+      new CustomHTTPError(404, 'User or password does not exists'),
     );
-    expect(response.sendStatus).toHaveBeenCalledWith(404);
   });
 });
