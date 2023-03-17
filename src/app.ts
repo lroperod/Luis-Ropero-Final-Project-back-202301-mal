@@ -1,3 +1,4 @@
+import { errorHandler } from './utils/errors/error-handler.js';
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -14,5 +15,6 @@ app.get('/', (req, res) => {
 
 app.use(express.json());
 app.use('/auth', authRouter);
+app.use(errorHandler);
 
 export default app;
