@@ -1,6 +1,6 @@
 import { Joi } from 'express-validation';
 
-export const authValidation = {
+export const loginValidation = {
   body: Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string()
@@ -8,4 +8,13 @@ export const authValidation = {
       .required(),
   }),
 };
-export default authValidation;
+
+export const registerValidation = {
+  body: Joi.object({
+    name: Joi.string(),
+    email: Joi.string().email().required(),
+    password: Joi.string()
+      .regex(/[a-zA-Z0-9]{3,30}/)
+      .required(),
+  }),
+};
