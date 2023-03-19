@@ -3,8 +3,9 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import connectDB from '../../database/connection';
 import app from '../../app';
-import { UserModel } from '../users/user-schema';
+import { UserModel, UserRegistration } from '../users/user-schema';
 import { encryptPassword } from './auth-utils';
+
 describe('Given an app with auth-router', () => {
   let mongoServer: MongoMemoryServer;
 
@@ -39,6 +40,47 @@ describe('Given an app with auth-router', () => {
         password: 'secret12',
       };
       await request(app).post('/auth/login').send(notExistUser).expect(404);
+    });
+  });
+
+  describe('When a user want to register with a correct email and password', () => {
+    test('Then the user should be registered', async () => {
+      const user: UserRegistration = {
+        name: 'David',
+        email: 'David@gmail.com',
+        password: 'secret123',
+      };
+      await request(app).post('/auth/register').send(user).expect(201);
+    });
+  });
+
+  describe('When a user want to register when an existing email address', () => {
+    test('Then it should returned a message error', async () => {
+      const registeredUser = {
+        name: 'David',
+        email: 'David@gmail.com',
+        password: 'secret123',
+      };
+      await request(app)
+        .post('/auth/register')
+        .send(registeredUser)
+        .expect(409);
+    });
+  });
+
+  describe('When a user want to register with a invalid email format', () => {
+    test('Then it should returned a message error', async () => {
+      const invalidFormatNewUser: UserRegistration = {
+        name: 'David',
+        email: 'Davidgmail.com',
+        password: 'secret123',
+      };
+      const response = await request(app)
+        .post('/auth/register')
+        .send(invalidFormatNewUser)
+        .expect(400);
+
+      expect(response.body).toEqual({ msg: '"email" must be a valid email' });
     });
   });
 });
