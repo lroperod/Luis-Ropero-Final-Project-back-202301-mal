@@ -1,4 +1,5 @@
 import moongose, { Schema } from 'mongoose';
+import { Destination } from '../destinations/destination-schema';
 
 export interface User {
   name: string;
@@ -11,6 +12,9 @@ export interface User {
     intentionHaveChildren: boolean;
     eggOrChickenProteinAllergy: boolean;
   };
+  imageFavouriteUser: string;
+
+  destination: Destination;
 }
 export type UserRegistration = Pick<User, 'name' | 'email' | 'password'>;
 
@@ -25,6 +29,7 @@ const userSchema = new Schema<User>({
     intentionHaveChildren: Boolean,
     eggOrChickenProteinAllergy: Boolean,
   },
+  destination: { type: Schema.Types.ObjectId, ref: 'Destination' },
 });
 
 export const UserModel = moongose.model<User>('User', userSchema, 'users');
