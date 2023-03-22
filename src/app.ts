@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import authRouter from './api/auth/auth-router.js';
+import apiRouter from './api/api-router.js';
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.get('/', (req, res) => {
 
 app.use(express.json());
 app.use('/auth', authRouter);
+app.use('/api/v1', apiRouter);
 app.use(errorHandler);
 
 export default app;
