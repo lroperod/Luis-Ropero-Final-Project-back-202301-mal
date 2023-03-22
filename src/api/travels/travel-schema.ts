@@ -11,6 +11,7 @@ export interface Travel {
     stateVaccines: boolean;
   }[];
   travelCreator: string;
+  travelImage: string;
 }
 
 const travelSchema = new Schema<Travel>({
@@ -27,6 +28,7 @@ const travelSchema = new Schema<Travel>({
       stateVaccines: Boolean,
     },
   ],
+  travelImage: String,
 });
 
 export type TravelUser = Omit<Travel, 'travelCreator'>;
