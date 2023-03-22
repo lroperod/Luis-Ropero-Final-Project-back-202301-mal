@@ -1,7 +1,6 @@
-import { UserRegistration } from './../users/user-schema';
 import { RequestHandler } from 'express';
 import { CustomHTTPError } from '../../utils/errors/custom-http-error.js';
-import { UserModel } from '../users/user-schema.js';
+import { User, UserModel } from '../users/user-schema.js';
 import { AuthRequest, LoginResponse } from './auth-types.js';
 import { encryptPassword, generateJWTToken } from './auth-utils.js';
 
@@ -43,7 +42,7 @@ export const registerUserController: RequestHandler<
     );
   }
 
-  const newUser: UserRegistration = {
+  const newUser: User = {
     name,
     email,
     password: encryptPassword(password),

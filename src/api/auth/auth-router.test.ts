@@ -3,7 +3,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import connectDB from '../../database/connection';
 import app from '../../app';
-import { UserModel, UserRegistration } from '../users/user-schema';
+import { User, UserModel } from '../users/user-schema';
 import { encryptPassword } from './auth-utils';
 
 describe('Given an app with auth-router', () => {
@@ -45,7 +45,7 @@ describe('Given an app with auth-router', () => {
 
   describe('When a user want to register with a correct email and password', () => {
     test('Then the user should be registered', async () => {
-      const user: UserRegistration = {
+      const user: User = {
         name: 'David',
         email: 'David@gmail.com',
         password: 'secret123',
@@ -70,7 +70,7 @@ describe('Given an app with auth-router', () => {
 
   describe('When a user want to register with a invalid email format', () => {
     test('Then it should returned a message error', async () => {
-      const invalidFormatNewUser: UserRegistration = {
+      const invalidFormatNewUser: User = {
         name: 'David',
         email: 'Davidgmail.com',
         password: 'secret123',
