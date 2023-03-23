@@ -28,6 +28,7 @@ const travelSchema = new Schema<Travel>({
       stateVaccines: Boolean,
     },
   ],
+  travelCreator: String,
   travelImage: String,
 });
 
