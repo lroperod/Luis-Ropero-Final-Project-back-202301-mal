@@ -1,24 +1,24 @@
 import { RequestHandler } from 'express';
 import { Travel, TravelModel } from './travel-schema.js';
 
+const queryProjection = { __v: 0 };
+
 export const createTravelController: RequestHandler<
   unknown,
-  Travel | { msg: string },
-  Travel
-> = async (req, resp) => {
-  const travel: Travel = {
-    ...req.body,
-  };
+  Travel,
+  Travel,
+  unknown,
+  { travelData: Travel }
+> = async (_req, res) => {
+  const travelFormData = res.locals.travelData;
 
-  await TravelModel.create(travel);
-  resp.status(201).json({ msg: 'Your trip has been successfully created' });
+  await TravelModel.create(travelFormData);
+  res.status(201).json(travelFormData);
 };
-
-const queryProjection = { __v: 0 };
 
 export const getAllTravelsController: RequestHandler<
   unknown,
-  Travel[] | { msg: string }
+  Travel[]
 > = async (_req, res, next) => {
   try {
     const foundTravels = await TravelModel.find({}, queryProjection).exec();
