@@ -8,12 +8,17 @@ export const createTravelController: RequestHandler<
   Travel,
   Travel,
   unknown,
-  { travelData: Travel }
+  { travelData: Travel; picture: string; email: string }
 > = async (_req, res) => {
   const travelFormData = res.locals.travelData;
 
-  await TravelModel.create(travelFormData);
-  res.status(201).json(travelFormData);
+  const finalTravel: Travel = {
+    ...travelFormData,
+    travelImage: res.locals.picture,
+  };
+
+  await TravelModel.create(finalTravel);
+  res.status(201).json(finalTravel);
 };
 
 export const getAllTravelsController: RequestHandler<

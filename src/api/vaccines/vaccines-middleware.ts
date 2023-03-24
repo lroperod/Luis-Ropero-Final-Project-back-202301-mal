@@ -3,6 +3,7 @@ import { RequestHandler } from 'express';
 
 export const vaccinesMiddleware: RequestHandler = (req, res, next) => {
   const travelData: TravelVaccines = req.body;
+
   const finalTravelData: Travel = {
     userAssociatedVaccines: [],
     travelAssociatedVaccines: [],

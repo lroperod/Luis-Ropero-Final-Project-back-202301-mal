@@ -22,5 +22,11 @@ export const registerValidation = {
 export const createTravelValidation = {
   body: Joi.object({
     continent: Joi.string(),
+    riskFactorUser: {
+      stayingRuralArea: Joi.boolean(),
+      chronicRespiratoryDisease: Joi.boolean(),
+      intentionHaveChildren: Joi.boolean(),
+      eggOrChickenProteinAllergy: Joi.boolean(),
+    },
   }),
 };

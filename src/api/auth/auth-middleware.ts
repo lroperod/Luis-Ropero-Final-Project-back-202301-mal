@@ -21,5 +21,6 @@ export const authMiddleware: RequestHandler = (req, res, next) => {
   ) as jwt.JwtPayload;
 
   res.locals.id = payload.id;
+  res.locals.email = payload.email;
   next();
 };

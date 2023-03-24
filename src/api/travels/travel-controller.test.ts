@@ -51,12 +51,14 @@ describe('Given a createTravelController function from travelController', () => 
         Travel,
         Travel,
         unknown,
-        { travelData: Travel }
+        { travelData: Travel; picture: string; email: string }
       >,
       mockResponse as Response<
         Travel,
         {
           travelData: Travel;
+          picture: string;
+          email: string;
         }
       >,
       next as NextFunction,
