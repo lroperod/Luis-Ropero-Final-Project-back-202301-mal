@@ -4,9 +4,16 @@ import {
   getAllTravelsController,
 } from './travel-controller.js';
 
-export const travelRouter = express.Router();
+import { vaccinesMiddleware } from '../vaccines/vaccines-middleware.js';
+import { validate } from 'express-validation';
+import { createTravelValidation } from '../auth/auth-validation.js';
 
+export const travelRouter = express.Router();
 travelRouter
   .route('/')
-  .post(createTravelController)
+  .post(
+    vaccinesMiddleware,
+    validate(createTravelValidation),
+    createTravelController,
+  )
   .get(getAllTravelsController);

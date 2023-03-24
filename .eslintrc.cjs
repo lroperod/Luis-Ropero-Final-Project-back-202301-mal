@@ -13,7 +13,7 @@ module.exports = {
   },
   plugins: ['@typescript-eslint'],
   rules: {
-    indent: ['Error', 2],
+    indent: ['Error', 2, { SwitchCase: 1 }],
     'object-curly-spacing': ['Error', 'always'],
     'new-cap': ['error', { capIsNewExceptions: ['express.Router'] }],
   },

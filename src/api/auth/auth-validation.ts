@@ -18,3 +18,9 @@ export const registerValidation = {
       .required(),
   }),
 };
+
+export const createTravelValidation = {
+  body: Joi.object({
+    continent: Joi.string(),
+  }),
+};

@@ -7,35 +7,62 @@ import {
 
 describe('Given a createTravelController function from travelController', () => {
   const next = jest.fn();
-
-  const request = {
-    country: 'India',
-    userAssociatedVaccines: {
-      nameVaccines: 'Colera',
-      stateVaccines: 'true',
+  const mockRequest = {
+    body: {
+      // Acountry: 'India',
+      continent: 'Asia',
+      riskFactorUser: {
+        stayingRuralArea: true,
+        chronicRespiratoryDisease: true,
+        intentionHaveChildren: true,
+        eggOrChickenProteinAllergy: true,
+      },
+      travelCreator: 'Pedro',
+      travelImage: 'image.png',
     },
-    travelAssociatedVaccines: {
-      nameVaccines: 'fiebre amarilla',
-      stateVaccines: 'true',
-    },
-    travelCreator: 'Antonio',
   } as Partial<Request>;
 
-  const response = {
+  const mockResponse = {
+    locals: {
+      travelData: {
+        // Acountry: 'India',
+        continent: 'Asia',
+        riskFactorUser: {
+          stayingRuralArea: true,
+          chronicRespiratoryDisease: true,
+          intentionHaveChildren: true,
+          eggOrChickenProteinAllergy: true,
+        },
+        travelCreator: 'Pedro',
+        travelImage: 'image.png',
+      },
+    },
+
     status: jest.fn().mockReturnThis(),
     json: jest.fn(),
-  } as Partial<Response<Travel | { msg: string }>>;
+  } as Partial<Response>;
 
-  TravelModel.create = jest.fn().mockResolvedValue(response);
+  TravelModel.create = jest.fn().mockResolvedValue(mockResponse);
 
   test('When the database response is successfull it, then it should respond with a message', async () => {
     await createTravelController(
-      request as Request,
-      response as Response,
+      mockRequest as Request<
+        unknown,
+        Travel,
+        Travel,
+        unknown,
+        { travelData: Travel }
+      >,
+      mockResponse as Response<
+        Travel,
+        {
+          travelData: Travel;
+        }
+      >,
       next as NextFunction,
     );
 
-    await expect(response.status).toHaveBeenCalledWith(201);
+    await expect(mockResponse.status).toHaveBeenCalledWith(201);
   });
 });
 
@@ -47,11 +74,11 @@ describe('Given a getAllTravelsController function from travelController', () =>
   const response = {
     status: jest.fn().mockReturnThis(),
     json: jest.fn(),
-  } as Partial<Response<Travel | { msg: string }>>;
+  } as Partial<Response<Travel>>;
 
   const foundTravel = [
     {
-      country: 'India',
+      continent: 'Asia',
       userAssociatedVaccines: {
         nameVaccines: 'Colera',
         stateVaccines: 'true',
