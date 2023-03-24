@@ -137,11 +137,11 @@ describe('Given a vaccinesMiddleware', () => {
       ],
       travelAssociatedVaccines: [
         {
-          nameVaccines: 'Encefalitis Japonesa',
+          nameVaccines: 'Fiebre amarilla',
           stateVaccines: false,
         },
         {
-          nameVaccines: 'Fiebre Tifoidea',
+          nameVaccines: 'Rabia',
           stateVaccines: false,
         },
         {

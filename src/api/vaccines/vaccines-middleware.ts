@@ -47,11 +47,11 @@ export const vaccinesMiddleware: RequestHandler = (req, res, next) => {
     case 'America':
       finalTravelData.travelAssociatedVaccines = [
         {
-          nameVaccines: 'Encefalitis Japonesa',
+          nameVaccines: 'Fiebre amarilla',
           stateVaccines: false,
         },
         {
-          nameVaccines: 'Fiebre Tifoidea',
+          nameVaccines: 'Rabia',
           stateVaccines: false,
         },
         {
