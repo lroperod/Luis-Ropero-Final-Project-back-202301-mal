@@ -1,7 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 
 export interface Travel {
-  country: string;
   userAssociatedVaccines: {
     nameVaccines: string;
     stateVaccines: boolean;
@@ -15,7 +14,6 @@ export interface Travel {
 }
 
 const travelSchema = new Schema<Travel>({
-  country: String,
   userAssociatedVaccines: [
     {
       nameVaccines: String,
@@ -32,7 +30,15 @@ const travelSchema = new Schema<Travel>({
   travelImage: String,
 });
 
-export type TravelUser = Omit<Travel, 'travelCreator'>;
+export interface TravelVaccines {
+  continent: string;
+  riskFactorUser: {
+    stayingRuralArea: boolean;
+    chronicRespiratoryDisease: boolean;
+    intentionHaveChildren: boolean;
+    eggOrChickenProteinAllergy: boolean;
+  };
+}
 
 export const TravelModel = mongoose.model<Travel>(
   'Travel',
