@@ -23,11 +23,11 @@ export const createTravelController: RequestHandler<
 
 export const getAllTravelsController: RequestHandler<
   unknown,
-  Travel[]
+  { travels: Travel[] }
 > = async (_req, res, next) => {
   try {
     const foundTravels = await TravelModel.find({}, queryProjection).exec();
-    res.json(foundTravels);
+    res.json({ travels: foundTravels });
   } catch (error) {
     next(error);
   }

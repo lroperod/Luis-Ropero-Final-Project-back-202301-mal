@@ -9,7 +9,6 @@ describe('Given a createTravelController function from travelController', () => 
   const next = jest.fn();
   const mockRequest = {
     body: {
-      // Acountry: 'India',
       continent: 'Asia',
       riskFactorUser: {
         stayingRuralArea: true,
@@ -25,7 +24,6 @@ describe('Given a createTravelController function from travelController', () => 
   const mockResponse = {
     locals: {
       travelData: {
-        // Acountry: 'India',
         continent: 'Asia',
         riskFactorUser: {
           stayingRuralArea: true,
@@ -76,9 +74,9 @@ describe('Given a getAllTravelsController function from travelController', () =>
   const response = {
     status: jest.fn().mockReturnThis(),
     json: jest.fn(),
-  } as Partial<Response<Travel>>;
+  } as Partial<Response>;
 
-  const foundTravel = [
+  const foundTravels = [
     {
       continent: 'Asia',
       userAssociatedVaccines: {
@@ -96,7 +94,7 @@ describe('Given a getAllTravelsController function from travelController', () =>
 
   test('When the database response is successfull it, then it should respond with a list of travels', async () => {
     TravelModel.find = jest.fn().mockImplementation(() => ({
-      exec: jest.fn().mockResolvedValue([{ foundTravel }]),
+      exec: jest.fn().mockResolvedValue(foundTravels),
     }));
     await getAllTravelsController(
       request as Request,
@@ -104,7 +102,7 @@ describe('Given a getAllTravelsController function from travelController', () =>
       next as NextFunction,
     );
 
-    expect(response.json).toHaveBeenCalledWith([{ foundTravel }]);
+    expect(response.json).toHaveBeenCalledWith({ travels: foundTravels });
   });
 
   test('When the database trows an error, it must be handled by the errorhandler', async () => {
