@@ -11,6 +11,7 @@ export interface Travel {
   }[];
   travelCreator: string;
   travelImage: string;
+  continent: string;
 }
 
 const travelSchema = new Schema<Travel>({
@@ -28,6 +29,7 @@ const travelSchema = new Schema<Travel>({
   ],
   travelCreator: String,
   travelImage: String,
+  continent: String,
 });
 
 export interface TravelVaccines {
