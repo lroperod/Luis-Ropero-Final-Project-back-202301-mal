@@ -27,6 +27,7 @@ describe('Given a vaccinesMiddleware', () => {
     vaccinesMiddleware(req, resp, next);
 
     const expectedTravelData: Travel = {
+      continent: 'Asia',
       userAssociatedVaccines: [
         {
           nameVaccines: 'Neumococo',
@@ -72,6 +73,7 @@ describe('Given a vaccinesMiddleware', () => {
     vaccinesMiddleware(req, resp, next);
 
     const expectedTravelData: Travel = {
+      continent: 'Africa',
       userAssociatedVaccines: [
         {
           nameVaccines: 'Neumococo',
@@ -117,6 +119,7 @@ describe('Given a vaccinesMiddleware', () => {
     vaccinesMiddleware(req, resp, next);
 
     const expectedTravelData: Travel = {
+      continent: 'America',
       userAssociatedVaccines: [
         {
           nameVaccines: 'Neumococo',

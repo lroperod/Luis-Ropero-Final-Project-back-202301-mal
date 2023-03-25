@@ -28,5 +28,6 @@ export const createTravelValidation = {
       intentionHaveChildren: Joi.boolean(),
       eggOrChickenProteinAllergy: Joi.boolean(),
     },
+    travelCreator: Joi.string(),
   }),
 };
