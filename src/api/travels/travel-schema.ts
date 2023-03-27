@@ -12,6 +12,7 @@ export interface Travel {
   travelCreator: string;
   travelImage: string;
   continent: string;
+  userName: string;
 }
 
 const travelSchema = new Schema<Travel>({
@@ -30,9 +31,11 @@ const travelSchema = new Schema<Travel>({
   travelCreator: String,
   travelImage: String,
   continent: String,
+  userName: String,
 });
 
 export interface TravelVaccines {
+  userName: string;
   continent: string;
   riskFactorUser: {
     stayingRuralArea: boolean;
