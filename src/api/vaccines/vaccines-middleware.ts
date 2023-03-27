@@ -10,6 +10,7 @@ export const vaccinesMiddleware: RequestHandler = (req, res, next) => {
     travelCreator: req.body.travelCreator,
     travelImage: req.body.travelImage,
     continent: req.body.continent,
+    userName: req.body.userName,
   };
 
   switch (travelData.continent) {

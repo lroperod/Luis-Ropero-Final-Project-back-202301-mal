@@ -6,7 +6,8 @@ describe('Given a vaccinesMiddleware', () => {
   const req = {
     body: {
       continent: 'Asia',
-      travelCreator: 'Antonio',
+      userName: 'Antonio',
+      travelCreator: 'id12345',
       travelImage: 'https://example.com/image.jpg',
       riskFactorUser: {
         chronicRespiratoryDisease: true,
@@ -28,6 +29,7 @@ describe('Given a vaccinesMiddleware', () => {
 
     const expectedTravelData: Travel = {
       continent: 'Asia',
+      userName: 'Antonio',
       userAssociatedVaccines: [
         {
           nameVaccines: 'Neumococo',
@@ -60,7 +62,7 @@ describe('Given a vaccinesMiddleware', () => {
           stateVaccines: false,
         },
       ],
-      travelCreator: 'Antonio',
+      travelCreator: 'id12345',
       travelImage: 'https://example.com/image.jpg',
     };
 
@@ -74,6 +76,7 @@ describe('Given a vaccinesMiddleware', () => {
 
     const expectedTravelData: Travel = {
       continent: 'Africa',
+      userName: 'Antonio',
       userAssociatedVaccines: [
         {
           nameVaccines: 'Neumococo',
@@ -106,7 +109,7 @@ describe('Given a vaccinesMiddleware', () => {
           stateVaccines: false,
         },
       ],
-      travelCreator: 'Antonio',
+      travelCreator: 'id12345',
       travelImage: 'https://example.com/image.jpg',
     };
 
@@ -120,6 +123,7 @@ describe('Given a vaccinesMiddleware', () => {
 
     const expectedTravelData: Travel = {
       continent: 'America',
+      userName: 'Antonio',
       userAssociatedVaccines: [
         {
           nameVaccines: 'Neumococo',
@@ -152,7 +156,7 @@ describe('Given a vaccinesMiddleware', () => {
           stateVaccines: false,
         },
       ],
-      travelCreator: 'Antonio',
+      travelCreator: 'id12345',
       travelImage: 'https://example.com/image.jpg',
     };
 
