@@ -9,6 +9,7 @@ describe('Given a createTravelController function from travelController', () => 
   const next = jest.fn();
   const mockRequest = {
     body: {
+      userName: 'Antonio',
       continent: 'Asia',
       riskFactorUser: {
         stayingRuralArea: true,
@@ -16,7 +17,7 @@ describe('Given a createTravelController function from travelController', () => 
         intentionHaveChildren: true,
         eggOrChickenProteinAllergy: true,
       },
-      travelCreator: 'Pedro',
+      travelCreator: 'id12345',
       travelImage: 'image.png',
     },
   } as Partial<Request>;
@@ -24,6 +25,7 @@ describe('Given a createTravelController function from travelController', () => 
   const mockResponse = {
     locals: {
       travelData: {
+        userName: 'Antonio',
         continent: 'Asia',
         riskFactorUser: {
           stayingRuralArea: true,
@@ -31,7 +33,7 @@ describe('Given a createTravelController function from travelController', () => 
           intentionHaveChildren: true,
           eggOrChickenProteinAllergy: true,
         },
-        travelCreator: 'Pedro',
+        travelCreator: 'id12345',
         travelImage: 'image.png',
       },
     },
@@ -79,6 +81,7 @@ describe('Given a getAllTravelsController function from travelController', () =>
   const foundTravels = [
     {
       continent: 'Asia',
+      userName: 'Antonio',
       userAssociatedVaccines: {
         nameVaccines: 'Colera',
         stateVaccines: 'true',
@@ -87,7 +90,7 @@ describe('Given a getAllTravelsController function from travelController', () =>
         nameVaccines: 'fiebre amarilla',
         stateVaccines: 'true',
       },
-      travelCreator: 'Antonio',
+      travelCreator: 'id12345',
       travelImage: 'url',
     },
   ];
