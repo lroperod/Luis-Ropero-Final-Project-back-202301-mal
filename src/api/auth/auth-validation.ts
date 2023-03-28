@@ -21,13 +21,13 @@ export const registerValidation = {
 
 export const createTravelValidation = {
   body: Joi.object({
+    userName: Joi.string(),
     continent: Joi.string(),
-    riskFactorUser: {
-      stayingRuralArea: Joi.boolean(),
-      chronicRespiratoryDisease: Joi.boolean(),
-      intentionHaveChildren: Joi.boolean(),
-      eggOrChickenProteinAllergy: Joi.boolean(),
-    },
+    stayingRuralArea: Joi.boolean(),
+    chronicRespiratoryDisease: Joi.boolean(),
+    intentionHaveChildren: Joi.boolean(),
+    eggOrChickenProteinAllergy: Joi.boolean(),
     travelCreator: Joi.string(),
+    travelImage: Joi.string(),
   }),
 };
