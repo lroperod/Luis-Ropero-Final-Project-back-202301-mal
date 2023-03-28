@@ -3,7 +3,6 @@ import { RequestHandler } from 'express';
 
 export const vaccinesMiddleware: RequestHandler = (req, res, next) => {
   const travelData: TravelVaccines = req.body;
-
   const finalTravelData: Travel = {
     userAssociatedVaccines: [],
     travelAssociatedVaccines: [],
@@ -67,28 +66,28 @@ export const vaccinesMiddleware: RequestHandler = (req, res, next) => {
       break;
   }
 
-  if (travelData.riskFactorUser.chronicRespiratoryDisease) {
+  if (travelData.chronicRespiratoryDisease) {
     finalTravelData.userAssociatedVaccines.push({
       nameVaccines: 'Neumococo',
       stateVaccines: false,
     });
   }
 
-  if (travelData.riskFactorUser.stayingRuralArea) {
+  if (travelData.stayingRuralArea) {
     finalTravelData.userAssociatedVaccines.push({
       nameVaccines: 'Colera',
       stateVaccines: false,
     });
   }
 
-  if (travelData.riskFactorUser.intentionHaveChildren) {
+  if (travelData.intentionHaveChildren) {
     finalTravelData.userAssociatedVaccines.push({
       nameVaccines: 'Tosferina dTDA',
       stateVaccines: false,
     });
   }
 
-  if (travelData.riskFactorUser.eggOrChickenProteinAllergy) {
+  if (travelData.eggOrChickenProteinAllergy) {
     finalTravelData.userAssociatedVaccines.push({
       nameVaccines: 'Gripe',
       stateVaccines: false,
