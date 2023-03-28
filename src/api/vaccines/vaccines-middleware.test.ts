@@ -9,12 +9,10 @@ describe('Given a vaccinesMiddleware', () => {
       userName: 'Antonio',
       travelCreator: 'id12345',
       travelImage: 'https://example.com/image.jpg',
-      riskFactorUser: {
-        chronicRespiratoryDisease: true,
-        stayingRuralArea: true,
-        intentionHaveChildren: true,
-        eggOrChickenProteinAllergy: true,
-      },
+      chronicRespiratoryDisease: true,
+      stayingRuralArea: true,
+      intentionHaveChildren: true,
+      eggOrChickenProteinAllergy: true,
     },
   } as Request;
   const resp = {
