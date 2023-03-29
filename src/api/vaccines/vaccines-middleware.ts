@@ -1,8 +1,10 @@
 import { Travel, TravelVaccines } from './../travels/travel-schema.js';
 import { RequestHandler } from 'express';
+import { CustomHTTPError } from '../../utils/errors/custom-http-error.js';
 
 export const vaccinesMiddleware: RequestHandler = (req, res, next) => {
   const travelData: TravelVaccines = req.body;
+
   const finalTravelData: Travel = {
     userAssociatedVaccines: [],
     travelAssociatedVaccines: [],
@@ -29,6 +31,7 @@ export const vaccinesMiddleware: RequestHandler = (req, res, next) => {
         },
       ];
       break;
+
     case 'Africa':
       finalTravelData.travelAssociatedVaccines = [
         {
@@ -63,31 +66,31 @@ export const vaccinesMiddleware: RequestHandler = (req, res, next) => {
       ];
       break;
     default:
-      break;
+      next(new CustomHTTPError(400, 'the selected continent is incorrect'));
   }
 
-  if (travelData.chronicRespiratoryDisease) {
+  if (travelData.chronicRespiratoryDisease === 'true') {
     finalTravelData.userAssociatedVaccines.push({
       nameVaccines: 'Neumococo',
       stateVaccines: false,
     });
   }
 
-  if (travelData.stayingRuralArea) {
+  if (travelData.stayingRuralArea === 'true') {
     finalTravelData.userAssociatedVaccines.push({
       nameVaccines: 'Colera',
       stateVaccines: false,
     });
   }
 
-  if (travelData.intentionHaveChildren) {
+  if (travelData.intentionHaveChildren === 'true') {
     finalTravelData.userAssociatedVaccines.push({
       nameVaccines: 'Tosferina dTDA',
       stateVaccines: false,
     });
   }
 
-  if (travelData.eggOrChickenProteinAllergy) {
+  if (travelData.eggOrChickenProteinAllergy === 'true') {
     finalTravelData.userAssociatedVaccines.push({
       nameVaccines: 'Gripe',
       stateVaccines: false,

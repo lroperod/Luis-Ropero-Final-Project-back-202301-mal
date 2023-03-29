@@ -37,10 +37,10 @@ const travelSchema = new Schema<Travel>({
 export interface TravelVaccines {
   userName: string;
   continent: string;
-  stayingRuralArea: boolean;
-  chronicRespiratoryDisease: boolean;
-  intentionHaveChildren: boolean;
-  eggOrChickenProteinAllergy: boolean;
+  stayingRuralArea: string;
+  chronicRespiratoryDisease: string;
+  intentionHaveChildren: string;
+  eggOrChickenProteinAllergy: string;
 }
 
 export const TravelModel = mongoose.model<Travel>(
