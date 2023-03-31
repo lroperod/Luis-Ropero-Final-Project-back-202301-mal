@@ -1,0 +1,160 @@
+{
+  "info": {
+    "_postman_id": "499885ad-3622-4d27-b155-d8c301fef148",
+    "name": "Pre-Travel Vaccination",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "18051395"
+  },
+  "item": [
+    {
+      "name": "User login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\":\"ejemplo@gmail.com\",\n    \"password\":\"aaaaaa\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://luis-ropero-final-project-back-2023-mal.onrender.com/auth/login",
+          "protocol": "https",
+          "host": [
+            "luis-ropero-final-project-back-2023-mal",
+            "onrender",
+            "com"
+          ],
+          "path": ["auth", "login"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "User register",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{   \n    \"name\":\"antonio\",\n    \"email\":\"ejemplo@gmail.com\",\n    \"password\":\"aaaaaa\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://luis-ropero-final-project-back-2023-mal.onrender.com/auth/login",
+          "protocol": "https",
+          "host": [
+            "luis-ropero-final-project-back-2023-mal",
+            "onrender",
+            "com"
+          ],
+          "path": ["auth", "login"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create travel",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFudG9uaW9AZ21haWwuY29tIiwiaWF0IjoxNjc5Njc2MzU0fQ.IVCEbDASEezswijBVHmK0nIwEqfv_MOut_7ZSuGW4HM",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "continent",
+              "value": "África",
+              "type": "text"
+            },
+            {
+              "key": "riskFactorUser[stayingRuralArea]",
+              "value": "true",
+              "type": "text"
+            },
+            {
+              "key": "riskFactorUser[chronicRespiratoryDisease]",
+              "value": "false",
+              "type": "text"
+            },
+            {
+              "key": "riskFactorUser[intentionHaveChildren]",
+              "value": "true",
+              "type": "text"
+            },
+            {
+              "key": "riskFactorUser[eggOrChickenProteinAllergy]",
+              "value": "false",
+              "type": "text"
+            },
+            {
+              "key": "travelUpload",
+              "type": "file",
+              "src": "/Users/luisroperodoval/Desktop/fotos proyecto final/home/africa.webp"
+            },
+            {
+              "key": "travelCreator",
+              "value": "Antonio",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://luis-ropero-final-project-back-2023-mal.onrender.com//api/v1/travel",
+          "protocol": "https",
+          "host": [
+            "luis-ropero-final-project-back-2023-mal",
+            "onrender",
+            "com"
+          ],
+          "path": ["", "api", "v1", "travel"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get all travels",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFudG9uaW9AZ21haWwuY29tIiwiaWF0IjoxNjc5NzQ1NDQwfQ.MhZx_Fo_EEIGMAOEbj-Yx7xbI4Nz-8FM4rbd5Wj4j-E",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://luis-ropero-final-project-back-2023-mal.onrender.com//api/v1/travel",
+          "protocol": "https",
+          "host": [
+            "luis-ropero-final-project-back-2023-mal",
+            "onrender",
+            "com"
+          ],
+          "path": ["", "api", "v1", "travel"]
+        }
+      },
+      "response": []
+    }
+  ]
+}
