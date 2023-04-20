@@ -2,6 +2,7 @@ import express from 'express';
 import {
   createTravelController,
   getAllTravelsController,
+  getTravelsByEmailCreatorController,
 } from './travel-controller.js';
 
 import { vaccinesMiddleware } from '../vaccines/vaccines-middleware.js';
@@ -21,3 +22,5 @@ travelRouter
     createTravelController,
   )
   .get(getAllTravelsController);
+
+travelRouter.route('/:userEmail').get(getTravelsByEmailCreatorController);
