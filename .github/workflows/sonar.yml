@@ -10,9 +10,13 @@ jobs:
     name: SonarCloud
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
         with:
           fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Install Node.js
+        run: setup-node@v2
+        with:
+          node-version: 18 # Especifica la versión de Node.js que deseas utilizar
       - name: Node Modules
         run: npm ci
       - name: Coverage
