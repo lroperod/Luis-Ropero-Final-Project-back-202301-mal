@@ -8,9 +8,11 @@ on:
 jobs:
   sonarcloud:
     name: SonarCloud
-    runs-on: ubuntu-latest
+    runs-on:
+      using: 'node16'
+      main: 'main.js'
     steps:
-      - uses: actions/checkout@v3.2.0
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
       - name: Node Modules
