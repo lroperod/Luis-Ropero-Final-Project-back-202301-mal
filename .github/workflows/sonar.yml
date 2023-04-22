@@ -11,12 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
+          node-version: 16
           fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.16.0
+      - run: npm ci
+      - run: npm test
       - name: Node Modules
         run: npm ci
       - name: Coverage
