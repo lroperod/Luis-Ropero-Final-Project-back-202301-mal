@@ -11,11 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
         with:
-          node-version: 16
           fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
-      - run: npm ci
       - name: Node Modules
         run: npm ci
       - name: Coverage
@@ -28,7 +25,7 @@ jobs:
           SUPABASE_BUCKET_URL: ${{ secrets.SUPABASE_BUCKET_URL }}
           SUPABASE_BUCKET_API_KEY: ${{ secrets.SUPABASE_BUCKET_API_KEY }}
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+        uses: SonarSource/sonarcloud-github-action@v1.8
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
