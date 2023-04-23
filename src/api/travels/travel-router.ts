@@ -1,6 +1,7 @@
 import express from 'express';
 import {
   createTravelController,
+  deleteTravelByIdController,
   getAllTravelsController,
   getTravelsByEmailCreatorController,
 } from './travel-controller.js';
@@ -24,3 +25,4 @@ travelRouter
   .get(getAllTravelsController);
 
 travelRouter.route('/:userEmail').get(getTravelsByEmailCreatorController);
+travelRouter.route('/:id').delete(deleteTravelByIdController);

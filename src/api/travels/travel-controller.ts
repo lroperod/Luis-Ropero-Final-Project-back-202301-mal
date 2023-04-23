@@ -2,6 +2,8 @@ import { RequestHandler } from 'express';
 import { Travel, TravelModel } from './travel-schema.js';
 import { CustomHTTPError } from '../../utils/errors/custom-http-error.js';
 import { UserModel } from '../users/user-schema.js';
+import { supabase } from '../../database/supabase-client.js';
+import { TRAVEL_BUCKET_NAME } from '../../database/supabase-client.js';
 
 const queryProjection = { __v: 0 };
 
@@ -64,4 +66,25 @@ export const getTravelsByEmailCreatorController: RequestHandler<
   } catch (error) {
     next(error);
   }
+};
+
+export const deleteTravelByIdController: RequestHandler<{
+  id: string;
+}> = async (req, res, next) => {
+  const { id } = req.params;
+
+  const travel = await TravelModel.findByIdAndDelete({ _id: id }).exec();
+
+  if (travel !== undefined && travel !== null) {
+    const file = travel.travelImage.substring(
+      travel.travelImage.lastIndexOf('/') + 1,
+    );
+    await supabase.storage.from(TRAVEL_BUCKET_NAME).remove([file]);
+  }
+
+  if (travel === null) {
+    return next(new CustomHTTPError(404, 'The travel does not exist'));
+  }
+
+  return res.status(200).json('The travel has been deleted');
 };

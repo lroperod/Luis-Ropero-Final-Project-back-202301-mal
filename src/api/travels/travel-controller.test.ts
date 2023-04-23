@@ -3,10 +3,41 @@ import { Request, Response, NextFunction } from 'express';
 import { Travel, TravelModel } from './travel-schema';
 import {
   createTravelController,
+  deleteTravelByIdController,
   getAllTravelsController,
   getTravelsByEmailCreatorController,
 } from './travel-controller';
 import { UserModel } from '../users/user-schema';
+
+jest.mock('@supabase/supabase-js', () => {
+  const data = {
+    publicUrl: 'https://example.com/photo.png',
+  };
+  return {
+    createClient: jest.fn().mockImplementation(() => ({
+      storage: {
+        from: jest.fn().mockReturnValue({
+          upload: jest.fn().mockResolvedValue({
+            error: null,
+            data: {
+              ...data,
+            },
+          }),
+          getPublicUrl: jest.fn().mockReturnValue({
+            error: null,
+            data: {
+              ...data,
+            },
+          }),
+          remove: jest.fn().mockResolvedValue({
+            error: null,
+            data: {},
+          }),
+        }),
+      },
+    })),
+  };
+});
 
 describe('Given a createTravelController function from travelController', () => {
   const next = jest.fn();
@@ -241,5 +272,63 @@ describe('Given a  getTravelsByEmailCreatorController function from travelContro
     );
 
     expect(TravelModel.find).toHaveBeenCalledWith({ travelCreator });
+  });
+});
+
+describe('Given a deleteTravelByIdController', () => {
+  const request = {
+    params: { id: 'mockId' },
+  } as Partial<Request>;
+  const response = {
+    status: jest.fn().mockReturnThis(),
+    sendStatus: jest.fn(),
+    json: jest.fn(),
+  } as Partial<Response>;
+  const next = jest.fn();
+
+  const travels = {
+    id: 'mockId',
+    continent: 'Asia',
+    userName: 'Antonio',
+    userAssociatedVaccines: {
+      nameVaccines: 'Colera',
+      stateVaccines: 'true',
+    },
+    travelAssociatedVaccines: {
+      nameVaccines: 'fiebre amarilla',
+      stateVaccines: 'true',
+    },
+    travelCreator: 'id12345',
+    travelImage: 'url',
+  };
+
+  describe('When the user wants delete her travel', () => {
+    test('Then the travel should be deleted', async () => {
+      TravelModel.findByIdAndDelete = jest.fn().mockImplementation(() => ({
+        exec: jest.fn().mockResolvedValue(travels),
+      }));
+      await deleteTravelByIdController(
+        request as Request<{ id: 'mockId' }>,
+        response as Response,
+        next,
+      );
+      expect(response.status).toHaveBeenCalledWith(200);
+    });
+  });
+
+  describe('When the travel for delete do not exist', () => {
+    test('Then should be throw an error 404', async () => {
+      TravelModel.findByIdAndDelete = jest.fn().mockImplementation(() => ({
+        exec: jest.fn().mockResolvedValue(null),
+      }));
+      await deleteTravelByIdController(
+        request as Request<{ id: 'mockId' }>,
+        response as Response,
+        next,
+      );
+      expect(next).toHaveBeenCalledWith(
+        new CustomHTTPError(404, 'The travel does not exist'),
+      );
+    });
   });
 });
