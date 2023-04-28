@@ -3,6 +3,7 @@ import {
   createTravelController,
   deleteTravelByIdController,
   getAllTravelsController,
+  getTravelByIdController,
   getTravelsByEmailCreatorController,
 } from './travel-controller.js';
 
@@ -24,5 +25,8 @@ travelRouter
   )
   .get(getAllTravelsController);
 
-travelRouter.route('/:userEmail').get(getTravelsByEmailCreatorController);
-travelRouter.route('/:id').delete(deleteTravelByIdController);
+travelRouter.route('/user/:userEmail').get(getTravelsByEmailCreatorController);
+travelRouter
+  .route('/:id')
+  .delete(deleteTravelByIdController)
+  .get(getTravelByIdController);

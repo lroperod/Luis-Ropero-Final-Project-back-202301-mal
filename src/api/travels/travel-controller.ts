@@ -2,10 +2,12 @@ import { RequestHandler } from 'express';
 import { Travel, TravelModel } from './travel-schema.js';
 import { CustomHTTPError } from '../../utils/errors/custom-http-error.js';
 import { UserModel } from '../users/user-schema.js';
-import { supabase } from '../../database/supabase-client.js';
-import { TRAVEL_BUCKET_NAME } from '../../database/supabase-client.js';
+import {
+  supabase,
+  TRAVEL_BUCKET_NAME,
+} from '../../database/supabase-client.js';
 
-const queryProjection = { __v: 0 };
+const queryProjection = { __v: 0, subjects: 0 };
 
 export const createTravelController: RequestHandler<
   unknown,
@@ -54,9 +56,12 @@ export const getTravelsByEmailCreatorController: RequestHandler<
   const { userEmail } = req.params;
 
   try {
-    const travel = await TravelModel.find({
-      travelCreator: userEmail,
-    }).exec();
+    const travel = await TravelModel.find(
+      {
+        travelCreator: userEmail,
+      },
+      queryProjection,
+    ).exec();
 
     if (travel === null) {
       throw new CustomHTTPError(404, 'This travel does not exist');
@@ -66,6 +71,20 @@ export const getTravelsByEmailCreatorController: RequestHandler<
   } catch (error) {
     next(error);
   }
+};
+
+export const getTravelByIdController: RequestHandler<
+  { id: string },
+  { travels: Travel }
+> = async (req, res, next) => {
+  const { id } = req.params;
+
+  const travel = await TravelModel.findById(id, queryProjection).exec();
+  if (travel === null) {
+    return next(new CustomHTTPError(404, 'The travel does not exist'));
+  }
+
+  res.json({ travels: travel });
 };
 
 export const deleteTravelByIdController: RequestHandler<{
