@@ -5,6 +5,7 @@ import {
   createTravelController,
   deleteTravelByIdController,
   getAllTravelsController,
+  getTravelByIdController,
   getTravelsByEmailCreatorController,
 } from './travel-controller';
 import { UserModel } from '../users/user-schema';
@@ -253,7 +254,10 @@ describe('Given a  getTravelsByEmailCreatorController function from travelContro
     );
 
     expect(response.json).toHaveBeenCalledWith({ travels });
-    expect(TravelModel.find).toHaveBeenCalledWith({ travelCreator });
+    expect(TravelModel.find).toHaveBeenCalledWith(
+      { travelCreator },
+      { __v: 0, subjects: 0 },
+    );
   });
 
   test('When the travel does not exits then it should return a 404 status', async () => {
@@ -271,7 +275,10 @@ describe('Given a  getTravelsByEmailCreatorController function from travelContro
       new CustomHTTPError(404, 'This travel does not exist'),
     );
 
-    expect(TravelModel.find).toHaveBeenCalledWith({ travelCreator });
+    expect(TravelModel.find).toHaveBeenCalledWith(
+      { travelCreator },
+      { __v: 0, subjects: 0 },
+    );
   });
 });
 
@@ -322,6 +329,67 @@ describe('Given a deleteTravelByIdController', () => {
         exec: jest.fn().mockResolvedValue(null),
       }));
       await deleteTravelByIdController(
+        request as Request<{ id: 'mockId' }>,
+        response as Response,
+        next,
+      );
+      expect(next).toHaveBeenCalledWith(
+        new CustomHTTPError(404, 'The travel does not exist'),
+      );
+    });
+  });
+});
+
+describe('Given a  getTravelByIdController', () => {
+  const request = {
+    params: { id: 'mockId' },
+  } as Partial<Request>;
+  const response = {
+    status: jest.fn().mockReturnThis(),
+    sendStatus: jest.fn(),
+    json: jest.fn(),
+  } as Partial<Response>;
+  const next = jest.fn();
+
+  const travels = {
+    id: 'mockId',
+    continent: 'Asia',
+    userName: 'Antonio',
+    userAssociatedVaccines: {
+      nameVaccines: 'Colera',
+      stateVaccines: 'true',
+    },
+    travelAssociatedVaccines: {
+      nameVaccines: 'fiebre amarilla',
+      stateVaccines: 'true',
+    },
+    travelCreator: 'id12345',
+    travelImage: 'url',
+  };
+
+  describe('When the user searches for a travel by id', () => {
+    test('Then it should be found', async () => {
+      TravelModel.findById = jest.fn().mockImplementation(() => ({
+        exec: jest.fn().mockResolvedValue(travels),
+      }));
+      await getTravelByIdController(
+        request as Request<{ id: 'mockId' }>,
+        response as Response,
+        next,
+      );
+      expect(response.json).toHaveBeenCalledWith({ travels });
+      expect(TravelModel.findById).toHaveBeenCalledWith('mockId', {
+        __v: 0,
+        subjects: 0,
+      });
+    });
+  });
+  describe('When the user tries to search a travel by id and do not exist', () => {
+    test('Then should be throw an error 404', async () => {
+      TravelModel.findById = jest.fn().mockImplementation(() => ({
+        exec: jest.fn().mockResolvedValue(null),
+      }));
+      await getTravelByIdController(
         request as Request<{ id: 'mockId' }>,
         response as Response,
         next,
