@@ -105,5 +105,5 @@ export const deleteTravelByIdController: RequestHandler<{
     return next(new CustomHTTPError(404, 'The travel does not exist'));
   }
 
-  return res.status(200).json('The travel has been deleted');
+  return res.status(200).json({ msg: 'The travel has been deleted' });
 };
